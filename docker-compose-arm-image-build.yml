@@ -1,0 +1,47 @@
+# To execute this docker-compose yml file use `docker-compose -f docker-compose-v3.yml up`
+# Add the `-d` flag at the end for detached execution
+# To stop the execution, hit Ctrl+C, and then `docker-compose -f docker-compose-v3.yml down`
+version: "3"
+services:
+  selenium-base:
+    container_name: selenium-base
+    platform: linux/arm64
+    build:
+      context: ./Base
+      dockerfile: Dockerfile 
+
+  selenium-node-base:
+    container_name: selenium-node-base
+    platform: linux/arm64
+    build:
+      context: ./NodeBase
+      dockerfile: Dockerfile 
+
+  selenium-hub:
+    container_name: selenium-hub
+    platform: linux/arm64
+    build:
+      context: ./Hub
+      dockerfile: Dockerfile 
+
+  selenium-node-chrome:
+    container_name: selenium-node-base
+    platform: linux/arm64
+    build:
+      context: ./NodeChrome
+      dockerfile: Dockerfile 
+
+  selenium-node-firefox:
+    container_name: selenium-node-firefox
+    platform: linux/arm64
+    build:
+      context: ./NodeFirefox
+      dockerfile: Dockerfile 
+
+  selenium-node-edge:
+    container_name: selenium-node-edge
+    platform: linux/arm64
+    build:
+      context: ./NodeEdge
+      dockerfile: Dockerfile 
+    
