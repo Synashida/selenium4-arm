@@ -3,7 +3,7 @@
 # PLEASE UPDATE Dockerfile.txt INSTEAD OF THIS FILE
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM ncnetwork/selenium4-node-base-arm:latest
-LABEL authors=SeleniumHQ
+LABEL authors="NCNetwork co., ltd."
 
 USER root
 
@@ -17,13 +17,40 @@ USER root
 #       latest (equivalent to google-chrome-stable)
 #       google-chrome-beta  (pull latest beta)
 #============================================
-ARG CHROME_VERSION="80.0.3987.163"
 RUN apt-get update \
     && apt-get --assume-yes -qqy install software-properties-common \
-    && add-apt-repository -y ppa:canonical-chromium-builds/stage \
     && apt-get --assume-yes -qqy install chromium-browser chromium-chromedriver
 
+
+#=================================
+# Chrome Launch Script Wrapper
+#=================================
+COPY wrap_chrome_binary /opt/bin/wrap_chrome_binary
+RUN /opt/bin/wrap_chrome_binary
+
 USER 1200
+
+#============================================
+# Chrome webdriver
+#============================================
+# can specify versions by CHROME_DRIVER_VERSION
+# Latest released version will be used by default
+#============================================
+
+#ARG CHROME_DRIVER_VERSION
+#RUN if [ -z "$CHROME_DRIVER_VERSION" ]; \
+#  then CHROME_MAJOR_VERSION=$(google-chrome --version | sed -E "s/.* ([0-9]+)(\.[0-9]+){3}.*/\1/") \
+#    && CHROME_DRIVER_VERSION=$(wget --no-verbose -O - "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_MAJOR_VERSION}"); \
+#  fi \
+#  && echo "Using chromedriver version: "$CHROME_DRIVER_VERSION \
+#  && wget --no-verbose -O /tmp/chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip \
+#  && rm -rf /opt/selenium/chromedriver \
+#  && unzip /tmp/chromedriver_linux64.zip -d /opt/selenium \
+#  && rm /tmp/chromedriver_linux64.zip \
+#  && mv /opt/selenium/chromedriver /opt/selenium/chromedriver-$CHROME_DRIVER_VERSION \
+#  && chmod 755 /opt/selenium/chromedriver-$CHROME_DRIVER_VERSION \
+#  && sudo ln -fs /opt/selenium/chromedriver-$CHROME_DRIVER_VERSION /usr/bin/chromedriver
+
 
 #============================================
 # Dumping Browser name and version for config

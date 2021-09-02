@@ -14,13 +14,12 @@ USER root
 #  e.g. microsoft-edge-beta=88.0.692.0-1
 #============================================
 ARG EDGE_VERSION="microsoft-edge-beta"
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg \
-  && install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/ \
-  && echo "deb [arch=arm64] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge-beta.list \
-  && apt-get update -qqy \
-  && apt-get -qqy install ${EDGE_VERSION} \
-  && rm rm microsoft.gpg && rm /etc/apt/sources.list.d/microsoft-edge.list \
-  && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+RUN wget -q -O - https://packages.microsoft.com/keys/microsoft.asc | apt-key add - 
+RUN echo "deb https://packages.microsoft.com/repos/edge stable main" >> /etc/apt/sources.list.d/microsoft-edge.list 
+RUN apt-get update -qqy 
+RUN apt-get -qqy install ${EDGE_VERSION} 
+RUN rm /etc/apt/sources.list.d/microsoft-edge.list 
+RUN rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 #=================================
 # Edge Launch Script Wrapper

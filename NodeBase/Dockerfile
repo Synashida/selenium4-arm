@@ -3,7 +3,7 @@
 # PLEASE UPDATE Dockerfile.txt INSTEAD OF THIS FILE
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM ncnetwork/selenium4-base-arm:latest
-LABEL authors=SeleniumHQ
+LABEL authors="NCNetwork co., ltd."
 
 USER root
 
@@ -106,6 +106,11 @@ RUN  wget -nv -O noVNC.zip \
   && unzip -x websockify.zip \
   && rm websockify.zip \
   && mv websockify-${WEBSOCKIFY_SHA} /opt/bin/noVNC/utils/websockify
+
+#=========================================================================================================================================
+# Run this command for executable file permissions for /dev/shm when this is a "child" container running in Docker Desktop and WSL2 distro
+#=========================================================================================================================================
+RUN chmod +x /dev/shm
 
 #===================================================
 # Run the following commands as non-privileged user
