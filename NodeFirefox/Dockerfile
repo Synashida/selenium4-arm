@@ -3,7 +3,7 @@
 # PLEASE UPDATE Dockerfile.txt INSTEAD OF THIS FILE
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 FROM ncnetwork/selenium4-node-base-arm:latest
-LABEL authors="NCNetwork co., ltd."
+LABEL authors=SeleniumHQ
 
 USER root
 

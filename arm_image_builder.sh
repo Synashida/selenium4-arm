@@ -10,6 +10,8 @@ docker-compose -f docker-compose-arm-image-build.yml build --no-cache selenium-h
 docker tag selenium4-arm_selenium-hub:latest ncnetwork/selenium4-hub-arm:latest
 docker push ncnetwork/selenium4-hub-arm:latest
 
+## --- Node用
+
 # Node Base
 docker-compose -f docker-compose-arm-image-build.yml build --no-cache selenium-node-base
 docker tag selenium4-arm_selenium-node-base:latest ncnetwork/selenium4-node-base-arm:latest

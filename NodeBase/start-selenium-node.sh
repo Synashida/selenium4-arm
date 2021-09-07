@@ -12,6 +12,13 @@ pacmd set-default-source v1.monitor
 
 rm -f /tmp/.X*lock
 
+SE_NODE_BROWSER_NAME=$(cat /opt/selenium/browser_name)
+
+if [[ $SE_NODE_BROWSER_NAME == "chrome" ]]; then
+  sudo systemctl start snapd.service
+  sudo snap install chromium
+fi
+
 if [[ -z "${SE_EVENT_BUS_HOST}" ]]; then
   echo "SE_EVENT_BUS_HOST not set, exiting!" 1>&2
   exit 1
